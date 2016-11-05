@@ -1,0 +1,1238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Welcome to pygks’s documentation! — pygks 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pygks 1 documentation" href="#">
+    <meta name="viewport" content="width=device-width,
+      initial-scale=0.9, maximum-scale=0.9">
+  </head>
+  <body role="document">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            <div class="section" id="welcome-to-pygks-s-documentation">
+              <h1>Welcome to pygks’s documentation!<a class="headerlink"
+                  href="#welcome-to-pygks-s-documentation"
+                  title="Permalink to this headline">¶</a></h1>
+              <div class="section" id="installation-guide">
+                <h2>Installation Guide<a class="headerlink"
+                    href="#installation-guide" title="Permalink to this
+                    headline">¶</a></h2>
+                <p>This package depends on Python2.7, numpy, sklearn and
+                  python-graph. After the installation of Python 2.7,
+                  the other packages can be installed automatically with
+                  setuptools as follows.</p>
+                <div class="highlight-c">
+                  <div class="highlight">
+                    <pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">sklearn</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">matplotlib</span>
+</pre>
+                  </div>
+                </div>
+                <p>Python-graph can be downloaded from the link (also
+                  provided in the prerequisites folder of pygks):</p>
+                <p><a class="reference external"
+                    href="http://code.google.com/p/python-graph/">http://code.google.com/p/python-graph/</a></p>
+                <p>After downloading, switch to the ‘core’ directory and
+                  run:</p>
+                <div class="highlight-c">
+                  <div class="highlight">
+                    <pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">install</span>
+</pre>
+                  </div>
+                </div>
+                <p>Finally, after installing all the required packages,
+                  we can switch to the package directory and install the
+                  pygks package.</p>
+                <div class="highlight-c">
+                  <div class="highlight">
+                    <pre><span></span><span class="n">cd</span> <span class="n">Software</span> <span class="n">directory</span><span class="o">/</span><span class="n">pygks_package</span>
+<span class="n">python</span> <span class="n">setup</span><span class="p">.</span><span class="n">py</span> <span class="n">install</span>
+</pre>
+                  </div>
+                </div>
+              </div>
+              <div class="section" id="overview">
+                <h2>Overview<a class="headerlink" href="#overview"
+                    title="Permalink to this headline">¶</a></h2>
+                <p>This package implements the Growing Neural Gas (GNG),
+                  single layered Self-Organizing Incremental Neural
+                  Network (SOINN). Kernel Density Estimation (KDE), and
+                  Semi-Supervised Gaussian kernel smoothed (SSL-GKS)
+                  regression. Moreover, there are some usefull tools for
+                  high dimensional data visualization and density
+                  visualization.</p>
+                <p>If there’s any questions, please contact me at: <a
+                    class="reference external"
+                    href="mailto:lordxzy%40qq.com">lordxzy<span>@</span>qq<span>.</span>com</a>.</p>
+              </div>
+              <div class="section" id="examples">
+                <h2>Examples<a class="headerlink" href="#examples"
+                    title="Permalink to this headline">¶</a></h2>
+                <p>The following is an example of regression and drawing
+                  a 2d density contour.</p>
+                <div class="highlight-python">
+                  <div class="highlight">
+                    <pre><span></span><span class="kn">from</span> <span class="nn">pygks.utils</span> <span class="kn">import</span> <span class="n">csv_reader</span>
+<span class="kn">from</span> <span class="nn">pygks.reg_gng</span> <span class="kn">import</span> <span class="n">GNGregressor</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">csv_reader</span><span class="p">(</span><span class="s1">'reg_intro.csv'</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">separate_label</span><span class="p">()</span>
+<span class="n">the_reg</span> <span class="o">=</span> <span class="n">GNGregressor</span><span class="p">(</span><span class="n">smooth</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">age_max</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">nn_lambda</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">the_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">test_x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">draw_x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+<span class="n">test_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="o">/</span><span class="mf">100.0</span><span class="p">]))</span>
+<span class="n">draw_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mf">100.0</span><span class="p">)</span>
+<span class="n">test_y</span> <span class="o">=</span> <span class="n">the_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_x</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">csv_reader</span><span class="p">(</span><span class="s1">'reg_intro.csv'</span><span class="p">)</span>
+<span class="n">testX</span><span class="p">,</span> <span class="n">testY</span> <span class="o">=</span> <span class="n">r2</span><span class="o">.</span><span class="n">separate_label</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="k">print</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">testY</span><span class="p">,</span><span class="n">the_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">testX</span><span class="p">))</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">r_draw</span> <span class="o">=</span> <span class="n">csv_reader</span><span class="p">(</span><span class="s1">'reg_intro.csv'</span><span class="p">)</span>
+<span class="n">X_raw</span> <span class="o">=</span> <span class="n">r_draw</span><span class="o">.</span><span class="n">get_all</span><span class="p">()</span>
+<span class="n">X_draw</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">X_raw</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">X_draw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X_raw</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">print</span> <span class="n">X_raw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_draw</span><span class="p">)):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_draw</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">X_draw</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">'.'</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">'0.8'</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">draw_x</span><span class="p">,</span><span class="n">test_y</span><span class="p">,</span><span class="s1">'k-'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">the_reg</span><span class="o">.</span><span class="n">draw_density</span><span class="p">()</span>
+</pre>
+                  </div>
+                </div>
+                <p>The output is:</p>
+                <div class="highlight-python">
+                  <div class="highlight">
+                    <pre><span></span>training with bandwidth calculation, please wait...
+end round!
+time cost 0.599024057388
+0.0097513650717
+[ 0.         -0.12730268]
+</pre>
+                  </div>
+                </div>
+                <img alt="_images/regression.png"
+                  src="_images/regression.png">
+                <img alt="_images/density.png" src="_images/density.png">
+                <p>This is another example of drawing SOINN training
+                  result.</p>
+                <div class="highlight-python">
+                  <div class="highlight">
+                    <pre><span></span><span class="kn">from</span> <span class="nn">pygks.utils</span> <span class="kn">import</span> <span class="n">csv_reader</span>
+<span class="kn">from</span> <span class="nn">pygks.ui_isoinn</span> <span class="kn">import</span> <span class="n">data_block</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">csv_reader</span><span class="p">(</span><span class="s1">'wine_train.csv'</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get_all</span><span class="p">()</span>
+<span class="n">nn_model</span> <span class="o">=</span> <span class="n">data_block</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">age_max</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">nn_lambda</span> <span class="o">=</span> <span class="mi">70</span><span class="p">)</span>
+<span class="n">nn_model</span><span class="o">.</span><span class="n">draw_2d</span><span class="p">()</span>
+</pre>
+                  </div>
+                </div>
+                <p>The output is:</p>
+                <img alt="_images/2d.png" src="_images/2d.png">
+                <p>Another example of semi-supervised SOINN regression:</p>
+                <div class="highlight-python">
+                  <div class="highlight">
+                    <pre><span></span><span class="kn">from</span> <span class="nn">pygks.reg_inn</span> <span class="kn">import</span> <span class="n">ISOINNregressor</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array</span>
+<span class="kn">from</span> <span class="nn">pygks.utils</span> <span class="kn">import</span> <span class="n">csv_reader</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">isnan</span><span class="p">,</span><span class="n">isinf</span>
+
+<span class="n">r1</span> <span class="o">=</span> <span class="n">csv_reader</span><span class="p">(</span><span class="s1">'wine_train.csv'</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">csv_reader</span><span class="p">(</span><span class="s1">'wine_test.csv'</span><span class="p">)</span>
+
+<span class="n">trainX</span><span class="p">,</span> <span class="n">trainy</span> <span class="o">=</span> <span class="n">r1</span><span class="o">.</span><span class="n">separate_label</span><span class="p">()</span>
+<span class="n">testX</span><span class="p">,</span> <span class="n">testy</span> <span class="o">=</span> <span class="n">r2</span><span class="o">.</span><span class="n">separate_label</span><span class="p">()</span>
+<span class="n">nnReg</span> <span class="o">=</span> <span class="n">ISOINNregressor</span><span class="p">(</span><span class="n">K</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">age_max</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span> <span class="n">nn_lambda</span> <span class="o">=</span> <span class="mi">350</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">smooth</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>  <span class="n">del_noise</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">nnReg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">trainX</span><span class="p">,</span> <span class="n">trainy</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">testX</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="s1">'dimension'</span>
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">nnReg</span><span class="o">.</span><span class="n">nodes</span><span class="p">),</span><span class="s1">'nodes'</span>
+<span class="n">predicty</span> <span class="o">=</span> <span class="n">nnReg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">testX</span><span class="p">)</span>
+<span class="n">delets</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">predicty</span><span class="p">:</span>
+   <span class="k">if</span> <span class="n">isnan</span><span class="p">(</span><span class="n">each</span><span class="p">)</span> <span class="ow">or</span> <span class="n">isinf</span><span class="p">(</span><span class="n">each</span><span class="p">):</span>
+      <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">each</span><span class="p">,</span><span class="s1">'error after density estimation'</span><span class="p">)</span>
+      <span class="n">delets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+   <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">delets</span><span class="p">)):</span>
+   <span class="n">testy</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">delets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">i</span><span class="p">)</span>
+   <span class="n">predicty</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">delets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">i</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">delets</span><span class="p">),</span><span class="s1">'failed points'</span>
+<span class="k">print</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">testy</span><span class="p">,</span><span class="n">predicty</span><span class="p">)</span>
+</pre>
+                  </div>
+                </div>
+                <p>The output is:</p>
+                <div class="highlight-python">
+                  <div class="highlight">
+                    <pre><span></span>training with bandwidth calculation, please wait...
+end training SOINN!
+time cost 1.40131592751
+11 dimension
+107 nodes
+end training SOINN!
+0 failed points
+0.0125627244183
+</pre>
+                  </div>
+                </div>
+              </div>
+              <div class="section" id="package-contents">
+                <h2>Package Contents<a class="headerlink"
+                    href="#package-contents" title="Permalink to this
+                    headline">¶</a></h2>
+                <div class="toctree-wrapper compound">
+                  <ul class="simple">
+                  </ul>
+                </div>
+                <span class="target" id="module-pygks.utils"></span>
+                <dl class="class">
+                  <dt id="pygks.utils.csv_reader">
+                    <em class="property">class </em><code
+                      class="descclassname">pygks.utils.</code><code
+                      class="descname">csv_reader</code><span
+                      class="sig-paren">(</span><em>filename</em>, <em>has_header=False</em>,
+                    <em>deli='</em>, <em>'</em><span class="sig-paren">)</span><a
+                      class="headerlink" href="#pygks.utils.csv_reader"
+                      title="Permalink to this definition">¶</a></dt>
+                  <dd>
+                    <p>This class is for easy csv file reading.
+                      has_header is True or False. While set to True,
+                      this utility will jump the
+                      first line of csv file, thinking it as the header.
+                      <br>
+                    </p>
+                  </dd>
+                  <dd>
+                    <p>Parameters: filename (string), deli(charactor)</p>
+                  </dd>
+                  <dd>
+                    <p>filename is the file you want to read, which
+                      contains the data for machine learning. deli is
+                      the delimiter of the csv file.</p>
+                    <dl class="method">
+                      <dt id="pygks.utils.csv_reader.get_all">
+                        <code class="descname">get_all</code><span
+                          class="sig-paren">(</span><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.utils.csv_reader.get_all"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Return the complete data in the form of list
+                          of numpy arrays.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.utils.csv_reader.separate_label">
+                        <code class="descname">separate_label</code><span
+                          class="sig-paren">(</span><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.utils.csv_reader.separate_label"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Similar to get_all() method, but the last
+                          element in each line is separated as labels.</p>
+                      </dd>
+                    </dl>
+                  </dd>
+                </dl>
+                <span class="target" id="module-pygks.gks"></span>
+                <dl class="class">
+                  <dt id="pygks.gks.GKS">
+                    <em class="property">class </em><code
+                      class="descclassname">pygks.gks.</code><code
+                      class="descname">GKS</code><span class="sig-paren">(</span><em>setN</em>,
+                    <em>populations</em>, <em>standard_variances</em>,
+                    <em>Y_number</em>, <em>smooth=None</em>, <em>K=5</em><span
+                      class="sig-paren">)</span><a class="headerlink"
+                      href="#pygks.gks.GKS" title="Permalink to this
+                      definition">¶</a></dt>
+                  <dd>
+                    <p>Gaussian kernel smoother to transform any
+                      clustering method into regression. setN is the
+                      list containing numpy arrays which are the weights
+                      of clustering centors.
+                      populations is a list of integers of cluster
+                      populations. standard_variances is the list of
+                      real
+                      numbers meaning the standard variances of the
+                      dataset along each dimension. smooth is None or
+                      real number.
+                      While set to None, an SSL procedure will be
+                      employed. For details, see the responses() method.</p>
+                    <dl class="attribute">
+                      <dt id="pygks.gks.GKS.K">
+                        <code class="descname">K</code><em
+                          class="property"> = 5</em><a
+                          class="headerlink" href="#pygks.gks.GKS.K"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Number of clustering centers for smooth
+                          parameter calculation.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.gks.GKS.Y">
+                        <code class="descname">Y</code><em
+                          class="property"> = 1</em><a
+                          class="headerlink" href="#pygks.gks.GKS.Y"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Number of response variables.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.gks.GKS.percentages">
+                        <code class="descname">percentages</code><em
+                          class="property"> = None</em><a
+                          class="headerlink"
+                          href="#pygks.gks.GKS.percentages"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Distribution of the cluster populations.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.gks.GKS.responses">
+                        <code class="descname">responses</code><span
+                          class="sig-paren">(</span><em>points</em>, <em>prototypes=None</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.gks.GKS.responses"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>points is a list or array of numpy arrays,
+                          and this method returns the regression results
+                          of the dataset points. If the smooth parameter
+                          is initialized as None, the prototypes
+                          parameter
+                          will be required as a list or array of
+                          clustering centers in the form of numpy
+                          arrays, which is genertated
+                          by the user chosen clustering method on the
+                          same dataset to the one specified by points
+                          variable.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.gks.GKS.setN">
+                        <code class="descname">setN</code><em
+                          class="property"> = None</em><a
+                          class="headerlink" href="#pygks.gks.GKS.setN"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Weights of the clustering centers, after
+                          instance initialization, it will be a list
+                          data structure.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.gks.GKS.smooth">
+                        <code class="descname">smooth</code><em
+                          class="property"> = None</em><a
+                          class="headerlink"
+                          href="#pygks.gks.GKS.smooth" title="Permalink
+                          to this definition">¶</a></dt>
+                      <dd>
+                        <p>Smooth parameter.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.gks.GKS.xdim">
+                        <code class="descname">xdim</code><em
+                          class="property"> = None</em><a
+                          class="headerlink" href="#pygks.gks.GKS.xdim"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Dimension of the explanatory variables.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.gks.GKS.ydim">
+                        <code class="descname">ydim</code><em
+                          class="property"> = None</em><a
+                          class="headerlink" href="#pygks.gks.GKS.ydim"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Dimension of the response variables.</p>
+                      </dd>
+                    </dl>
+                  </dd>
+                </dl>
+                <span class="target" id="module-pygks.kde"></span>
+                <dl class="class">
+                  <dt id="pygks.kde.density">
+                    <em class="property">class </em><code
+                      class="descclassname">pygks.kde.</code><code
+                      class="descname">density</code><span
+                      class="sig-paren">(</span><em>setN</em>, <em>countN</em>,
+                    <em>standard_deviation</em><span class="sig-paren">)</span><a
+                      class="headerlink" href="#pygks.kde.density"
+                      title="Permalink to this definition">¶</a></dt>
+                  <dd>
+                    <p>This is a kernel density estimation framework,
+                      but not the complete algorithm.
+                      The user will have to run a clustering method
+                      first to get the clustering centers
+                      and cluster populations. setN is the list of numpy
+                      arrays which are the weights of clustering
+                      centers.
+                      countN is the list containing cluster populations.
+                      standard_deviation is the list of standard
+                      deviations
+                      of the dataset along each dimension.</p>
+                    <dl class="method">
+                      <dt id="pygks.kde.density.estimate">
+                        <code class="descname">estimate</code><span
+                          class="sig-paren">(</span><em>x_in</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.kde.density.estimate"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Estimate the density of the vector x_in.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.kde.density.kernel">
+                        <code class="descname">kernel</code><span
+                          class="sig-paren">(</span><em>x</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.kde.density.kernel"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Defines a Gaussian kernel as f(x), can define
+                          different kernels.</p>
+                      </dd>
+                    </dl>
+                  </dd>
+                </dl>
+                <span class="target" id="module-pygks.reg_gng"></span>
+                <p>GNG regressor</p>
+                <dl class="class">
+                  <dt id="pygks.reg_gng.GNGregressor">
+                    <em class="property">class </em><code
+                      class="descclassname">pygks.reg_gng.</code><code
+                      class="descname">GNGregressor</code><span
+                      class="sig-paren">(</span><em>smooth=None</em>, <em>response_dimension=1</em>,
+                    <em>K=10</em>, <em>age_max=100</em>, <em>nn_lambda=50</em>,
+                    <em>ann=0.5</em>, <em>bnn=0.0005</em>, <em>eb=0.05</em>,
+                    <em>en=0.0006</em><span class="sig-paren">)</span><a
+                      class="headerlink"
+                      href="#pygks.reg_gng.GNGregressor"
+                      title="Permalink to this definition">¶</a></dt>
+                  <dd>
+                    <p>Regression interface based on SSL-GKS and GNG.
+                      smooth can be set to None or real number, normally
+                      falls in [-1,0]. If set to None, SSL will be
+                      employed to estimate its value.
+                      response_dimension is integer, means the number of
+                      response variables.
+                      K is integer which is the number of neurons for
+                      kernel smoothing, larger K means little details
+                      but more smoothed predictions.
+                      The rest of the parameters are GNG training
+                      parameters.</p>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_gng.GNGregressor.K">
+                        <code class="descname">K</code><em
+                          class="property"> = 10</em><a
+                          class="headerlink"
+                          href="#pygks.reg_gng.GNGregressor.K"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Number of neurons selected for kernel
+                          smoothing.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_gng.GNGregressor.Pis">
+                        <code class="descname">Pis</code><em
+                          class="property"> = []</em><a
+                          class="headerlink"
+                          href="#pygks.reg_gng.GNGregressor.Pis"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Distribution of the neuron populations.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_gng.GNGregressor.bands">
+                        <code class="descname">bands</code><em
+                          class="property"> = []</em><a
+                          class="headerlink"
+                          href="#pygks.reg_gng.GNGregressor.bands"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Bandwidth for visualization.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.reg_gng.GNGregressor.draw_density">
+                        <code class="descname">draw_density</code><span
+                          class="sig-paren">(</span><em>resolution=0.05</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.reg_gng.GNGregressor.draw_density"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Draws the density contour of any regressor
+                          instance. It can only be called after calling
+                          the fit
+                          method, and only work in 2d case. resolution
+                          is a postitive real number definining the
+                          detail level of drawing.
+                          A smaller resolution number will generate more
+                          detailed drawings.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.reg_gng.GNGregressor.fit">
+                        <code class="descname">fit</code><span
+                          class="sig-paren">(</span><em>X</em>, <em>y</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.reg_gng.GNGregressor.fit"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>X is array or list, each element is numpy
+                          array. Y is array or list containing the
+                          response varaible values.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_gng.GNGregressor.gr">
+                        <code class="descname">gr</code><em
+                          class="property"> = []</em><a
+                          class="headerlink"
+                          href="#pygks.reg_gng.GNGregressor.gr"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Topology structure of neurons.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_gng.GNGregressor.nodes">
+                        <code class="descname">nodes</code><em
+                          class="property"> = []</em><a
+                          class="headerlink"
+                          href="#pygks.reg_gng.GNGregressor.nodes"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Weights of the neurons.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.reg_gng.GNGregressor.predict">
+                        <code class="descname">predict</code><span
+                          class="sig-paren">(</span><em>data</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.reg_gng.GNGregressor.predict"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>This method returns the predictions the
+                          variable data. data should be within the same
+                          data space to X in the fit method. When smooth
+                          parameter is set to None, an SSL
+                          procedure will be employed to estimate it.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_gng.GNGregressor.smooth">
+                        <code class="descname">smooth</code><em
+                          class="property"> = -0.4</em><a
+                          class="headerlink"
+                          href="#pygks.reg_gng.GNGregressor.smooth"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Smooth parameter for kernel smoothing, if set
+                          to None, SSL smooth parameter selection will
+                          be employed.</p>
+                      </dd>
+                    </dl>
+                  </dd>
+                </dl>
+                <span class="target" id="module-pygks.reg_inn"></span>
+                <p>The SOINN regressor.</p>
+                <dl class="class">
+                  <dt id="pygks.reg_inn.ISOINNregressor">
+                    <em class="property">class </em><code
+                      class="descclassname">pygks.reg_inn.</code><code
+                      class="descname">ISOINNregressor</code><span
+                      class="sig-paren">(</span><em>smooth=None</em>, <em>response_dimension=1</em>,
+                    <em>K=10</em>, <em>age_max=200</em>, <em>nn_lambda=60</em>,
+                    <em>alpha=10</em>, <em>del_noise=True</em><span
+                      class="sig-paren">)</span><a class="headerlink"
+                      href="#pygks.reg_inn.ISOINNregressor"
+                      title="Permalink to this definition">¶</a></dt>
+                  <dd>
+                    <p>Regression interface based on SSL-GKS and SOINN.
+                      smooth can be set to None or real number, normally
+                      falls in [-1,0]. If set to None, SSL will be
+                      employed to estimate its value.
+                      response_dimension is integer, means the number of
+                      response variables.
+                      K is integer which is the number of neurons for
+                      kernel smoothing, larger K means little details
+                      but more smoothed predictions.
+                      The rest of the parameters are GNG training
+                      parameters.</p>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_inn.ISOINNregressor.K">
+                        <code class="descname">K</code><em
+                          class="property"> = 10</em><a
+                          class="headerlink"
+                          href="#pygks.reg_inn.ISOINNregressor.K"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Number of neurons selected for kernel
+                          smoothing.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_inn.ISOINNregressor.Pis">
+                        <code class="descname">Pis</code><em
+                          class="property"> = []</em><a
+                          class="headerlink"
+                          href="#pygks.reg_inn.ISOINNregressor.Pis"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Distribution of the neuron populations.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_inn.ISOINNregressor.bands">
+                        <code class="descname">bands</code><em
+                          class="property"> = []</em><a
+                          class="headerlink"
+                          href="#pygks.reg_inn.ISOINNregressor.bands"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Bandwidth for visualization.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt
+                        id="pygks.reg_inn.ISOINNregressor.draw_density">
+                        <code class="descname">draw_density</code><span
+                          class="sig-paren">(</span><em>resolution=0.05</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.reg_inn.ISOINNregressor.draw_density"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Draws the density contour of any regressor
+                          instance. It can only be called after calling
+                          the fit
+                          method, and only work in 2d case. resolution
+                          is a postitive real number definining the
+                          detail level of drawing.
+                          A smaller resolution number will generate more
+                          detailed drawings.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.reg_inn.ISOINNregressor.fit">
+                        <code class="descname">fit</code><span
+                          class="sig-paren">(</span><em>X</em>, <em>y</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.reg_inn.ISOINNregressor.fit"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>X is array or list, each element is numpy
+                          array. Y is array or list containing the
+                          response varaible values.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_inn.ISOINNregressor.gr">
+                        <code class="descname">gr</code><em
+                          class="property"> = 0</em><a
+                          class="headerlink"
+                          href="#pygks.reg_inn.ISOINNregressor.gr"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Topology structure of neurons.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_inn.ISOINNregressor.nodes">
+                        <code class="descname">nodes</code><em
+                          class="property"> = []</em><a
+                          class="headerlink"
+                          href="#pygks.reg_inn.ISOINNregressor.nodes"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Weights of the neurons.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.reg_inn.ISOINNregressor.predict">
+                        <code class="descname">predict</code><span
+                          class="sig-paren">(</span><em>data</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.reg_inn.ISOINNregressor.predict"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>This method returns the predictions the
+                          variable data. data should be within the same
+                          data space to X in the fit method. When smooth
+                          parameter is set to None, an SSL
+                          procedure will be employed to estimate it.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.reg_inn.ISOINNregressor.smooth">
+                        <code class="descname">smooth</code><em
+                          class="property"> = -0.4</em><a
+                          class="headerlink"
+                          href="#pygks.reg_inn.ISOINNregressor.smooth"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Smooth parameter for kernel smoothing, if set
+                          to None, SSL smooth parameter selection will
+                          be employed.</p>
+                      </dd>
+                    </dl>
+                  </dd>
+                </dl>
+                <span class="target" id="module-pygks.ui_gng"></span>
+                <dl class="class">
+                  <dt id="pygks.ui_gng.data_block">
+                    <em class="property">class </em><code
+                      class="descclassname">pygks.ui_gng.</code><code
+                      class="descname">data_block</code><span
+                      class="sig-paren">(</span><em>data</em>, <em>no_label=True</em>,
+                    <em>age_max=300</em>, <em>nn_lambda=88</em>, <em>ann=0.5</em>,
+                    <em>bnn=0.0005</em>, <em>eb=0.05</em>, <em>en=0.0006</em><span
+                      class="sig-paren">)</span><a class="headerlink"
+                      href="#pygks.ui_gng.data_block" title="Permalink
+                      to this definition">¶</a></dt>
+                  <dd>
+                    <p>This is the programming and user interface for
+                      GNG. data is the training dataset, should be array
+                      or list, with each element numpy arrays with the
+                      same dimension.
+                      no_label is True or False. While set to False, the
+                      last element of each array in data will be treated
+                      as labels.
+                      The rest of the variables are training settings
+                      for GNG.</p>
+                    <dl class="method">
+                      <dt id="pygks.ui_gng.data_block.counts">
+                        <code class="descname">counts</code><span
+                          class="sig-paren">(</span><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_gng.data_block.counts"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Output the winning times of each neuron and
+                          the accumulated errors of the GNG network.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.ui_gng.data_block.draw_2d">
+                        <code class="descname">draw_2d</code><span
+                          class="sig-paren">(</span><em>scale=1</em>, <em>axis_=False</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_gng.data_block.draw_2d"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Draws the topology structure and neurons.
+                          scale is real number, it can be set
+                          arbitrarily to adjust the size
+                          of drawed neuron clusters. axis is True or
+                          False, and means weither to enable axis in the
+                          final drawings.
+                          In this method, MDS is used for drawing high
+                          dimensional Euclidean graphs. If you do not
+                          use this method, sklearn is
+                          not a prerequisite for running the pygks
+                          software.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.ui_gng.data_block.gr">
+                        <code class="descname">gr</code><em
+                          class="property"> = {}</em><a
+                          class="headerlink"
+                          href="#pygks.ui_gng.data_block.gr"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Topology structures, implemeted with
+                          python-graph.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.ui_gng.data_block.graph_features">
+                        <code class="descname">graph_features</code><span
+                          class="sig-paren">(</span><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_gng.data_block.graph_features"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Generating topological features including
+                          vertice orders for future use.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.ui_gng.data_block.nodes">
+                        <code class="descname">nodes</code><em
+                          class="property"> = []</em><a
+                          class="headerlink"
+                          href="#pygks.ui_gng.data_block.nodes"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Weight of neurons.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.ui_gng.data_block.outlier_nn">
+                        <code class="descname">outlier_nn</code><span
+                          class="sig-paren">(</span><em>positive=1</em>,
+                        <em>negative=-1</em><span class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_gng.data_block.outlier_nn"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>This method finds the largest neuron cluster.
+                          If a neuron belongs to this cluster, a label
+                          specified by positive will
+                          be added to this neuron, else this neuron will
+                          be labeled by negative variable. The labeled
+                          results will be outputed in a
+                          list as labels_final.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.ui_gng.data_block.output_graph">
+                        <code class="descname">output_graph</code><span
+                          class="sig-paren">(</span><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_gng.data_block.output_graph"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Return the topology structure as a
+                          python-graph.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.ui_gng.data_block.output_nodes">
+                        <code class="descname">output_nodes</code><span
+                          class="sig-paren">(</span><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_gng.data_block.output_nodes"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Return the list of neuron weights.</p>
+                      </dd>
+                    </dl>
+                  </dd>
+                </dl>
+                <span class="target" id="module-pygks.ui_isoinn"></span>
+                <dl class="class">
+                  <dt id="pygks.ui_isoinn.data_block">
+                    <em class="property">class </em><code
+                      class="descclassname">pygks.ui_isoinn.</code><code
+                      class="descname">data_block</code><span
+                      class="sig-paren">(</span><em>data</em>, <em>no_label=True</em>,
+                    <em>age_max=200</em>, <em>nn_lambda=70</em>, <em>alpha=2.0</em>,
+                    <em>del_noise=True</em>, <em>un_label=0</em><span
+                      class="sig-paren">)</span><a class="headerlink"
+                      href="#pygks.ui_isoinn.data_block"
+                      title="Permalink to this definition">¶</a></dt>
+                  <dd>
+                    <p>This is the programming and user interface for
+                      SOINN. data is the training dataset, should be
+                      array or list, with each element numpy arrays with
+                      the same dimension.
+                      no_label is True or False. While set to False, the
+                      last element of each array in data will be treated
+                      as labels.
+                      The rest of the variables are training settings
+                      for SOINN.</p>
+                    <dl class="method">
+                      <dt id="pygks.ui_isoinn.data_block.counts">
+                        <code class="descname">counts</code><span
+                          class="sig-paren">(</span><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_isoinn.data_block.counts"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Output the winning times of each neuron and
+                          the accumulated errors of the SOINN network.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.ui_isoinn.data_block.draw_2d">
+                        <code class="descname">draw_2d</code><span
+                          class="sig-paren">(</span><em>scale=1</em>, <em>axis_=False</em><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_isoinn.data_block.draw_2d"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Draws the topology structure and neurons.
+                          scale is real number, it can be set
+                          arbitrarily to adjust the size
+                          of drawed neuron clusters. axis is True or
+                          False, and means weither to enable axis in the
+                          final drawings.
+                          In this method, MDS is used for drawing high
+                          dimensional Euclidean graphs. If you do not
+                          use this method, sklearn is
+                          not a prerequisite for running the pygks
+                          software.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.ui_isoinn.data_block.gr">
+                        <code class="descname">gr</code><em
+                          class="property"> = {}</em><a
+                          class="headerlink"
+                          href="#pygks.ui_isoinn.data_block.gr"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Topology structures.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.ui_isoinn.data_block.graph_features">
+                        <code class="descname">graph_features</code><span
+                          class="sig-paren">(</span><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_isoinn.data_block.graph_features"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Generating topological features including
+                          vertice orders for future use.</p>
+                      </dd>
+                    </dl>
+                    <dl class="attribute">
+                      <dt id="pygks.ui_isoinn.data_block.nodes">
+                        <code class="descname">nodes</code><em
+                          class="property"> = []</em><a
+                          class="headerlink"
+                          href="#pygks.ui_isoinn.data_block.nodes"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Weight of neurons.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.ui_isoinn.data_block.outlier_nn">
+                        <code class="descname">outlier_nn</code><span
+                          class="sig-paren">(</span><em>positive=1</em>,
+                        <em>negative=-1</em><span class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_isoinn.data_block.outlier_nn"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>This method finds the largest neuron cluster.
+                          If a neuron belongs to this cluster, a label
+                          specified by positive will
+                          be added to this neuron, else this neuron will
+                          be labeled by negative variable. The labeled
+                          results will be outputed in a
+                          list as labels_final.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.ui_isoinn.data_block.output_graph">
+                        <code class="descname">output_graph</code><span
+                          class="sig-paren">(</span><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_isoinn.data_block.output_graph"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Return the topology structure as a
+                          python-graph.</p>
+                      </dd>
+                    </dl>
+                    <dl class="method">
+                      <dt id="pygks.ui_isoinn.data_block.output_nodes">
+                        <code class="descname">output_nodes</code><span
+                          class="sig-paren">(</span><span
+                          class="sig-paren">)</span><a
+                          class="headerlink"
+                          href="#pygks.ui_isoinn.data_block.output_nodes"
+                          title="Permalink to this definition">¶</a></dt>
+                      <dd>
+                        <p>Return the list of neuron weights.</p>
+                      </dd>
+                    </dl>
+                  </dd>
+                </dl>
+                <span class="target" id="module-pygks.gng2"></span>
+                <p>Growing Neural Gas main file, for developers only.</p>
+                <dl class="data">
+                  <dt id="pygks.gng2.gr">
+                    <code class="descclassname">pygks.gng2.</code><code
+                      class="descname">gr</code><em class="property"> =
+                      &lt;pygraph.classes.graph.graph [] []&gt;</em><a
+                      class="headerlink" href="#pygks.gng2.gr"
+                      title="Permalink to this definition">¶</a></dt>
+                  <dd>
+                    <p>topology structure implemented by python-graph</p>
+                  </dd>
+                </dl>
+                <dl class="function">
+                  <dt id="pygks.gng2.remove_node">
+                    <code class="descclassname">pygks.gng2.</code><code
+                      class="descname">remove_node</code><span
+                      class="sig-paren">(</span><em>index</em><span
+                      class="sig-paren">)</span><a class="headerlink"
+                      href="#pygks.gng2.remove_node" title="Permalink to
+                      this definition">¶</a></dt>
+                  <dd>
+                    <p>Remove a neuron specified by ‘index’.</p>
+                  </dd>
+                </dl>
+                <dl class="data">
+                  <dt id="pygks.gng2.setN">
+                    <code class="descclassname">pygks.gng2.</code><code
+                      class="descname">setN</code><em class="property">
+                      = []</em><a class="headerlink"
+                      href="#pygks.gng2.setN" title="Permalink to this
+                      definition">¶</a></dt>
+                  <dd>
+                    <p>set of neuron weights</p>
+                  </dd>
+                </dl>
+                <dl class="function">
+                  <dt id="pygks.gng2.set_parameter">
+                    <code class="descclassname">pygks.gng2.</code><code
+                      class="descname">set_parameter</code><span
+                      class="sig-paren">(</span><em>age</em>, <em>lambda_set</em>,
+                    <em>ann_set</em>, <em>bnn_set</em>, <em>eb_</em>,
+                    <em>en_</em><span class="sig-paren">)</span><a
+                      class="headerlink"
+                      href="#pygks.gng2.set_parameter" title="Permalink
+                      to this definition">¶</a></dt>
+                  <dd>
+                    <p>Initilization of GNG, calling this function after
+                      training will reset the
+                      neural network for further training. age,
+                      lambda_set, ann_set, bnn_set, <a href="#id1"><span
+                          class="problematic" id="id2">eb_</span></a>,
+                      <a href="#id3"><span class="problematic" id="id4">en_</span></a>
+                      are the GNG parameters meaning max age, learning
+                      step, winner adaptation size,
+                      neighbor of winner adaptation size, and error
+                      reduction sizes.</p>
+                  </dd>
+                </dl>
+                <dl class="function">
+                  <dt id="pygks.gng2.step">
+                    <code class="descclassname">pygks.gng2.</code><code
+                      class="descname">step</code><span
+                      class="sig-paren">(</span><em>point</em>, <em>pLabel</em>,
+                    <em>tx</em><span class="sig-paren">)</span><a
+                      class="headerlink" href="#pygks.gng2.step"
+                      title="Permalink to this definition">¶</a></dt>
+                  <dd>
+                    <p>The GNG training procedures in each step. ‘point’
+                      is the
+                      input vector. ‘pLabel’ is the label of the input
+                      vector and
+                      set to 0 if unlabeled. ‘tx’ is the mark for end
+                      training
+                      (when set to -1).</p>
+                  </dd>
+                </dl>
+                <span class="target" id="module-pygks.isoinn2"></span>
+                <p>The single layer SOINN algorithm procedures, for
+                  developers only.</p>
+                <dl class="data">
+                  <dt id="pygks.isoinn2.gr">
+                    <code class="descclassname">pygks.isoinn2.</code><code
+                      class="descname">gr</code><em class="property"> =
+                      &lt;pygraph.classes.graph.graph [] []&gt;</em><a
+                      class="headerlink" href="#pygks.isoinn2.gr"
+                      title="Permalink to this definition">¶</a></dt>
+                  <dd>
+                    <p>topology structure implemented by python-graph</p>
+                  </dd>
+                </dl>
+                <dl class="function">
+                  <dt id="pygks.isoinn2.remove_node">
+                    <code class="descclassname">pygks.isoinn2.</code><code
+                      class="descname">remove_node</code><span
+                      class="sig-paren">(</span><em>index</em><span
+                      class="sig-paren">)</span><a class="headerlink"
+                      href="#pygks.isoinn2.remove_node" title="Permalink
+                      to this definition">¶</a></dt>
+                  <dd>
+                    <p>Remove a neuron specified by ‘index’.</p>
+                  </dd>
+                </dl>
+                <dl class="data">
+                  <dt id="pygks.isoinn2.setN">
+                    <code class="descclassname">pygks.isoinn2.</code><code
+                      class="descname">setN</code><em class="property">
+                      = []</em><a class="headerlink"
+                      href="#pygks.isoinn2.setN" title="Permalink to
+                      this definition">¶</a></dt>
+                  <dd>
+                    <p>neuron weights</p>
+                  </dd>
+                </dl>
+                <dl class="function">
+                  <dt id="pygks.isoinn2.set_parameter">
+                    <code class="descclassname">pygks.isoinn2.</code><code
+                      class="descname">set_parameter</code><span
+                      class="sig-paren">(</span><em>age</em>, <em>lambda_set</em>,
+                    <em>alpha_set</em>, <em>min_cluster</em>, <em>if_delete</em><span
+                      class="sig-paren">)</span><a class="headerlink"
+                      href="#pygks.isoinn2.set_parameter"
+                      title="Permalink to this definition">¶</a></dt>
+                  <dd>
+                    <p>Initilization of SOINN, calling this function
+                      after training will reset the
+                      neural network for further training. age,
+                      lambda_set, alpha_set,min_cluster,if_delete
+                      are the SOINN parameters meaning max age, learning
+                      step, neuron clustering coefficient,
+                      minimum desired clusters and a choice whether to
+                      delete the neurons without neighbors
+                      in the final round of training.</p>
+                  </dd>
+                </dl>
+                <dl class="function">
+                  <dt id="pygks.isoinn2.step">
+                    <code class="descclassname">pygks.isoinn2.</code><code
+                      class="descname">step</code><span
+                      class="sig-paren">(</span><em>point</em>, <em>pLabel</em>,
+                    <em>tx</em><span class="sig-paren">)</span><a
+                      class="headerlink" href="#pygks.isoinn2.step"
+                      title="Permalink to this definition">¶</a></dt>
+                  <dd>
+                    <p>The SOINN training procedures in each step.
+                      ‘point’ is the
+                      input vector. ‘pLabel’ is the label of the input
+                      vector and
+                      set to 0 if unlabeled. ‘tx’ is the mark for end
+                      training
+                      (when set to -1).</p>
+                  </dd>
+                </dl>
+              </div>
+              <div class="section" id="indices-and-tables">
+                <h2>Indices and tables<a class="headerlink"
+                    href="#indices-and-tables" title="Permalink to this
+                    headline">¶</a></h2>
+                <ul class="simple">
+                  <li><a class="reference internal" href="genindex.html"><span>Index</span></a></li>
+                  <li><a class="reference internal"
+                      href="py-modindex.html"><span>Module Index</span></a></li>
+                  <li><a class="reference internal" href="search.html"><span>Search
+                        Page</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main
+        navigation">
+        <div class="sphinxsidebarwrapper">
+          <h3><a href="#">Table Of Contents</a></h3>
+          <ul>
+            <li><a class="reference internal" href="#">Welcome to
+                pygks’s documentation!</a>
+              <ul>
+                <li><a class="reference internal"
+                    href="#installation-guide">Installation Guide</a></li>
+                <li><a class="reference internal" href="#overview">Overview</a></li>
+                <li><a class="reference internal" href="#examples">Examples</a></li>
+                <li><a class="reference internal"
+                    href="#package-contents">Package Contents</a></li>
+                <li><a class="reference internal"
+                    href="#indices-and-tables">Indices and tables</a></li>
+              </ul>
+            </li>
+          </ul>
+          <div class="relations">
+            <h3>Related Topics</h3>
+            <ul>
+              <li><a href="#">Documentation overview</a>
+                <ul>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div role="note" aria-label="source link">
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/index.txt" rel="nofollow">Show
+                  Source</a></li>
+            </ul>
+          </div>
+          <div id="searchbox" style="display: none" role="search">
+            <h3>Quick search</h3>
+            <form class="search" action="search.html" method="get"> <input
+                name="q" type="text"> <input value="Go" type="submit">
+              <input name="check_keywords" value="yes" type="hidden"> <input
+                name="area" value="default" type="hidden"> </form>
+            <p class="searchtip" style="font-size: 90%"> Enter search
+              terms or a module, class or function name. </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer"> ©2016, Zhiyang Xiang. | Powered by <a
+        href="http://sphinx-doc.org/">Sphinx 1.3.5</a> &amp; <a
+        href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      | <a href="_sources/index.txt" rel="nofollow">Page source</a> </div>
+  </body>
+</html>
